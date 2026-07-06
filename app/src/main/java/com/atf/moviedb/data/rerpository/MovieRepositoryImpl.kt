@@ -53,7 +53,7 @@ class MovieRepositoryImpl(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMovies(genreId: Int): Flow<PagingData<Movie>> {
-        refreshMovies(genreId)
+//        refreshMovies(genreId)
 
         return Pager(
             config = PagingConfig(

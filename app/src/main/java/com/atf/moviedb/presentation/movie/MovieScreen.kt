@@ -21,16 +21,18 @@ fun MovieScreen(
     viewModel: MovieViewModel = koinViewModel(),
     onClick: (Int) -> Unit
 ) {
-//    val state by viewModel.state.collectAsState()
-
-    val movies =
-        viewModel.getMovies(
-            genreId
-        ).collectAsLazyPagingItems()
 
     LaunchedEffect(genreId) {
-        viewModel.getMovies(genreId)
+
+        viewModel.setGenre(
+            genreId
+        )
+
     }
+
+    val movies =
+        viewModel.movies
+            .collectAsLazyPagingItems()
 
     if(
         movies.itemCount == 0 &&
