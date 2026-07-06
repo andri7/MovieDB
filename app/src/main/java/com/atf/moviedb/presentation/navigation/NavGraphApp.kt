@@ -6,6 +6,7 @@ import androidx.navigation.compose.*
 import com.atf.moviedb.presentation.detail.DetailScreen
 import com.atf.moviedb.presentation.genre.GenreScreen
 import com.atf.moviedb.presentation.movie.MovieScreen
+import com.atf.moviedb.presentation.trailer.TrailerPlayerScreen
 
 @Composable
 fun NavGraphApp(
@@ -68,6 +69,30 @@ fun NavGraphApp(
 
             DetailScreen(
                 movieId = id,
+                onBack = {
+                    navController.popBackStack()
+                },
+                onTrailerClick = { key ->
+
+                    navController.navigate(
+                        Screen.Trailer.createRoute(
+                            key
+                        )
+                    )
+                }
+            )
+        }
+
+        composable(
+            Screen.Trailer.route
+        ) {
+            val key =
+                it.arguments
+                    ?.getString("videoKey")
+                    ?: ""
+
+            TrailerPlayerScreen(
+                youtubeKey = key,
                 onBack = {
                     navController.popBackStack()
                 }

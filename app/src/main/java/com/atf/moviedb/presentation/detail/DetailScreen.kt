@@ -19,6 +19,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import androidx.core.net.toUri
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.atf.moviedb.presentation.component.ErrorView
+import com.atf.moviedb.presentation.navigation.Screen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,6 +27,7 @@ import com.atf.moviedb.presentation.component.ErrorView
 fun DetailScreen(
     movieId: Int,
     onBack: () -> Unit,
+    onTrailerClick: (String) -> Unit,
     viewModel: DetailViewModel = koinViewModel()
 ) {
 
@@ -112,24 +114,27 @@ fun DetailScreen(
                         )
 
 
-                        if(
+                        if (
                             state.trailers.isNotEmpty()
-                        ){
+                        ) {
 
                             Button(
                                 onClick = {
-
                                     val key =
                                         state.trailers.first().key
 
-                                    val intent = Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse(
-                                            "https://www.youtube.com/watch?v=$key"
-                                        )
+                                    onTrailerClick(
+                                        key
                                     )
 
-                                    context.startActivity(intent)
+//                                    val intent = Intent(
+//                                        Intent.ACTION_VIEW,
+//                                        Uri.parse(
+//                                            "https://www.youtube.com/watch?v=$key"
+//                                        )
+//                                    )
+//
+//                                    context.startActivity(intent)
                                 }
                             ) {
                                 Text(
@@ -179,7 +184,7 @@ fun DetailScreen(
 
                         repeat(
                             reviews.itemCount
-                        ){ index ->
+                        ) { index ->
 
                             val review =
                                 reviews[index]
@@ -190,11 +195,11 @@ fun DetailScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(bottom = 12.dp)
-                            ){
+                            ) {
 
                                 Column(
                                     Modifier.padding(12.dp)
-                                ){
+                                ) {
 
                                     Text(
                                         "👤 ${review.author}"
