@@ -26,4 +26,13 @@ sealed class Screen(
             id:Int
         ) = "detail/$id"
     }
+
+
+    data object Trailer :
+        Screen("trailer/{videoKey}") {
+
+        fun createRoute(
+            key: String
+        ) = "trailer/$key"
+    }
 }
