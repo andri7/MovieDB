@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 val networkModule = module {
 
-    single { KtorClient.client }
+    single { KtorClient.create() }
 
     single { MovieApi(get()) }
 }

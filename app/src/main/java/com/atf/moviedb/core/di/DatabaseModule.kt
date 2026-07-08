@@ -26,4 +26,9 @@ val databaseModule = module {
     single {
         get<MovieDatabase>().reviewDao()
     }
+
+    single {
+        get<MovieDatabase>()
+            .cacheInfoDao()
+    }
 }

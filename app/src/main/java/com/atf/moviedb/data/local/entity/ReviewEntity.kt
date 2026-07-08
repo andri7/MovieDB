@@ -3,9 +3,7 @@ package com.atf.moviedb.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "reviews"
-)
+@Entity(tableName = "reviews")
 data class ReviewEntity(
 
     @PrimaryKey

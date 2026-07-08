@@ -31,9 +31,11 @@ class DetailViewModel(
                     movie = result
                 )
             } catch (e: Exception) {
+                val error = ErrorMapper.map(e)
+
                 _state.value =  _state.value.copy(
                     loading = false,
-                    error = ErrorMapper.getMessage(e)
+                    error = error.message
                 )
             }
         }

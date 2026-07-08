@@ -1,27 +1,90 @@
 package com.atf.moviedb.core.utils
 
-import io.ktor.client.network.sockets.SocketTimeoutException
-import java.net.UnknownHostException
+import com.atf.moviedb.core.error.AppError
+import com.atf.moviedb.core.error.ErrorType
+import com.atf.moviedb.core.network.ApiException
+import io.ktor.client.plugins.*
+import io.ktor.serialization.*
+import java.io.IOException
+import java.net.SocketTimeoutException
 
 object ErrorMapper {
 
-    fun getMessage(
-        throwable: Throwable
-    ): String {
+    fun map(throwable: Throwable): AppError {
+        return when (throwable) {
 
-        return when(
-            throwable
-        ){
+            is ClientRequestException -> {
+                when (throwable.response.status.value) {
+                    401 -> AppError(
+                        ErrorType.UNAUTHORIZED,
+                        "Session expired",
+                        throwable
+                    )
+                    else -> AppError(
+                        ErrorType.UNKNOWN,
+                        throwable.message ?: "Client error",
+                        throwable
+                    )
+                }
+            }
 
-            is UnknownHostException ->
-                "No internet connection"
+            is ServerResponseException -> {
+                AppError(
+                    ErrorType.SERVER_ERROR,
+                    "Server problem",
+                    throwable
+                )
+            }
 
-            is SocketTimeoutException ->
-                "Connection timeout"
+            is HttpRequestTimeoutException,
+            is SocketTimeoutException -> {
+                AppError(
+                    ErrorType.TIMEOUT,
+                    "Connection timeout",
+                    throwable
+                )
+            }
 
-            else ->
-                throwable.message
-                    ?: "Something went wrong"
+            is IOException -> {
+                AppError(
+                    ErrorType.NO_CONNECTION,
+                    "No internet connection",
+                    throwable
+                )
+            }
+
+            is JsonConvertException -> {
+                AppError(
+                    ErrorType.SERIALIZATION,
+                    "Invalid response format",
+                    throwable
+                )
+            }
+
+            is ApiException -> {
+                when(throwable.code){
+
+                    401 -> AppError(
+                        ErrorType.UNAUTHORIZED,
+                        throwable.message,
+                        throwable
+                    )
+
+                    else -> AppError(
+                        ErrorType.SERVER_ERROR,
+                        throwable.message,
+                        throwable
+                    )
+                }
+            }
+
+            else -> {
+                AppError(
+                    ErrorType.UNKNOWN,
+                    throwable.message ?: "Unknown error",
+                    throwable
+                )
+            }
         }
     }
 }

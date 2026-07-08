@@ -16,9 +16,7 @@ class MovieViewModel(
     private val repository: MovieRepository
 ) : ViewModel() {
 
-
     private val _genreId = MutableStateFlow(0)
-
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val movies =

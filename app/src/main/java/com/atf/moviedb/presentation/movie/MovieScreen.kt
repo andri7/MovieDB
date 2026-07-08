@@ -13,125 +13,162 @@ import coil.compose.AsyncImage
 import com.atf.moviedb.core.utils.Constant
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.atf.moviedb.core.utils.ImageUrl
+import com.atf.moviedb.presentation.component.MovieImage
+import com.atf.moviedb.presentation.component.PagingStateHandler
 
 @Composable
 fun MovieScreen(
-    genreId: Int,
-    modifier: Modifier = Modifier,
-    viewModel: MovieViewModel = koinViewModel(),
-    onClick: (Int) -> Unit
-) {
+    genreId:Int,
+    modifier:Modifier = Modifier,
+    viewModel:MovieViewModel = koinViewModel(),
+    onClick:(Int)->Unit
+){
 
-    LaunchedEffect(genreId) {
-
+    LaunchedEffect(
+        genreId
+    ){
         viewModel.setGenre(
             genreId
         )
-
     }
+
 
     val movies =
         viewModel.movies
             .collectAsLazyPagingItems()
 
-    if(
-        movies.itemCount == 0 &&
-        movies.loadState.refresh
-                !is LoadState.Loading
-    ){
 
-        Text(
-            text = "Movie not found"
-        )
 
-        return
-    }
+    PagingStateHandler(
 
-    LazyColumn(
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(movies.itemCount) { index ->
-            val movie =
-                movies[index]
-                    ?: return@items
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-                    .clickable {
-                        onClick(movie.id)
-                    }
-            ) {
+        items = movies,
 
-                Row(
-                    modifier = Modifier.padding(12.dp)
-                ) {
+        loading = {
 
-                    AsyncImage(
-                        model = Constant.IMAGE_URL + movie.poster,
-                        contentDescription = movie.title,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(150.dp)
-                    )
+            CircularProgressIndicator()
 
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 12.dp)
-                    ) {
+        },
 
-                        Text(
-                            text = movie.title,
-                            style = MaterialTheme.typography.titleMedium
-                        )
+        empty = {
 
-                        Spacer(
-                            Modifier.height(8.dp)
-                        )
+            Text(
+                "Movie not found"
+            )
 
-                        Text(
-                            text = movie.releaseDate ?: "-"
-                        )
+        },
 
-                        Spacer(
-                            Modifier.height(8.dp)
-                        )
+        error = {
 
-                        Text(
-                            text = "⭐ ${movie.rating}"
-                        )
-                    }
+            Button(
+                onClick = {
+                    movies.retry()
                 }
+            ){
+                Text(
+                    "Retry"
+                )
             }
+
         }
 
-        item {
+    ){
 
-            if(
-                movies.loadState.append
-                        is LoadState.Loading
-            ){
 
-                CircularProgressIndicator()
+        LazyColumn(
+            modifier =
+                modifier.fillMaxSize()
+        ){
+
+            items(
+                movies.itemCount
+            ){ index ->
+
+
+                val movie =
+                    movies[index]
+                        ?: return@items
+
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
+                        .clickable {
+                            onClick(
+                                movie.id
+                            )
+                        }
+                ){
+
+                    Row(
+                        modifier =
+                            Modifier.padding(12.dp)
+                    ){
+
+
+                        MovieImage(
+                            poster =
+                                ImageUrl.poster(
+                                    movie.poster
+                                ),
+                            modifier =
+                                Modifier
+                                    .width(100.dp)
+                                    .height(150.dp)
+                        )
+
+
+                        Column(
+                            modifier =
+                                Modifier.padding(
+                                    start = 12.dp
+                                )
+                        ){
+
+                            Text(
+                                movie.title,
+                                style =
+                                    MaterialTheme
+                                        .typography
+                                        .titleMedium
+                            )
+
+
+                            Spacer(
+                                Modifier.height(8.dp)
+                            )
+
+
+                            Text(
+                                movie.releaseDate ?: "-"
+                            )
+
+
+                            Spacer(
+                                Modifier.height(8.dp)
+                            )
+
+
+                            Text(
+                                "⭐ ${movie.rating}"
+                            )
+                        }
+                    }
+                }
             }
 
 
-            if(
-                movies.loadState.append
-                        is LoadState.Error
-            ){
 
-                Button(
-                    onClick = {
-                        movies.retry()
-                    }
+            item {
+
+                if(
+                    movies.loadState.append
+                            is LoadState.Loading
                 ){
-
-                    Text(
-                        "Retry"
-                    )
+                    CircularProgressIndicator()
                 }
+
             }
         }
     }

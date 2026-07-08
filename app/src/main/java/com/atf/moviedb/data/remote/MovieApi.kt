@@ -10,31 +10,21 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 
-
 class MovieApi(
 
     private val client: HttpClient
 
 ) {
 
-
-    fun token() {
-
-    }
-
+    fun token() {}
 
     suspend fun getGenres() =
         client.get(
             Constant.BASE_URL + "genre/movie/list"
         ) {
-
-            parameter(
-                "api_key",
-                Constant.TOKEN
-            )
+            parameter("api_key", Constant.TOKEN)
 
         }.body<GenreResponse>()
-
 
     suspend fun getMovies(
         genreId: Int,
@@ -45,22 +35,9 @@ class MovieApi(
             Constant.BASE_URL + "discover/movie"
         ) {
 
-            parameter(
-                "api_key",
-                Constant.TOKEN
-            )
-
-            parameter(
-                "with_genres",
-                genreId
-            )
-
-
-            parameter(
-                "page",
-                page
-            )
-
+            parameter("api_key", Constant.TOKEN)
+            parameter("with_genres", genreId)
+            parameter("page", page)
 
         }.body<MovieResponse>()
 
@@ -69,48 +46,22 @@ class MovieApi(
         id: Int
     ) =
 
-        client.get(
-            Constant.BASE_URL +
-                    "movie/$id"
-        ) {
-
-            parameter(
-                "api_key",
-                Constant.TOKEN
-            )
-
-
+        client.get(Constant.BASE_URL + "movie/$id") {
+            parameter("api_key", Constant.TOKEN)
         }.body<MovieDto>()
 
     suspend fun getReviews(
         id: Int,
         page: Int
     ) = client.get(Constant.BASE_URL + "movie/$id/reviews") {
-
-        parameter(
-            "api_key",
-            Constant.TOKEN
-        )
-
-        parameter(
-            "page",
-            page
-        )
+        parameter("api_key", Constant.TOKEN)
+        parameter("page", page)
     }.body<ReviewResponse>()
 
     suspend fun getTrailer(
         id: Int
     ) =
-        client.get(
-            Constant.BASE_URL +
-                    "movie/$id/videos"
-
-        ) {
-
-            parameter(
-                "api_key",
-                Constant.TOKEN
-            )
-
+        client.get(Constant.BASE_URL + "movie/$id/videos") {
+            parameter("api_key", Constant.TOKEN)
         }.body<TrailerResponse>()
 }

@@ -1,25 +1,37 @@
 package com.atf.moviedb.presentation.detail
 
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import com.atf.moviedb.core.utils.Constant
-import org.koin.compose.viewmodel.koinViewModel
-import androidx.core.net.toUri
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.atf.moviedb.core.utils.ImageUrl
 import com.atf.moviedb.presentation.component.ErrorView
-import com.atf.moviedb.presentation.navigation.Screen
+import com.atf.moviedb.presentation.component.MovieImage
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,14 +96,21 @@ fun DetailScreen(
                         )
                 ) {
 
-                    AsyncImage(
-                        model = Constant.IMAGE_URL + movie.poster,
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                    MovieImage(
+                        poster = ImageUrl.poster(movie.poster),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(350.dp)
+                            .height(350.dp),
+                        cScale = ContentScale.Crop
                     )
+//                    AsyncImage(
+//                        model = Constant.IMAGE_URL + movie.poster,
+//                        contentDescription = null,
+//                        contentScale = ContentScale.Crop,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .height(350.dp)
+//                    )
 
                     Column(
                         modifier = Modifier.padding(16.dp)

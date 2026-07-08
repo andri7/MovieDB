@@ -1,6 +1,7 @@
 package com.atf.moviedb.domain.repository
 
 import androidx.paging.PagingData
+import com.atf.moviedb.core.state.AppState
 import com.atf.moviedb.domain.model.Genre
 import com.atf.moviedb.domain.model.Movie
 import com.atf.moviedb.domain.model.Review
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-    fun getGenres(): Flow<List<Genre>>
+    fun getGenres(): Flow<AppState<List<Genre>>>
 
     fun getMovies(genreId:Int): Flow<PagingData<Movie>>
 

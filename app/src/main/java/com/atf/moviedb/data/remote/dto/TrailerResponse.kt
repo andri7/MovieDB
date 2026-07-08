@@ -5,9 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TrailerResponse(
-
     val results:List<TrailerDto>
-
 )
 
 

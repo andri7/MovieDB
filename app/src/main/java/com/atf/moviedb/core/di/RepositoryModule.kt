@@ -12,7 +12,9 @@ val repositoryModule = module {
             movieDao = get(),
             genreDao = get(),
             reviewDao = get(),
-            db = get()
+            db = get(),
+            syncManager = get(),
+            cacheManager = get()
         )
     }
 }

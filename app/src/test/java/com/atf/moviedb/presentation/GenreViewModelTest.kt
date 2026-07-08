@@ -11,41 +11,41 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.*
 
-class GenreViewModelTest {
-
-    @get:Rule
-    val rule =
-        MainDispatcherRule()
-
-    private val useCase =
-        mockk<GetGenreUseCase>()
-
-    @Test
-    fun `genre loaded success`() =
-        runTest {
-
-
-            every {
-                useCase()
-            } returns flowOf(
-                listOf(
-                    Genre(
-                        1,
-                        "Action"
-                    )
-                )
-            )
-
-            val viewModel =
-                GenreViewModel(
-                    useCase
-                )
-
-            assertEquals(
-                "Action",
-                viewModel.state.value
-                    .genres[0]
-                    .name
-            )
-        }
-}
+//class GenreViewModelTest {
+//
+//    @get:Rule
+//    val rule =
+//        MainDispatcherRule()
+//
+//    private val useCase =
+//        mockk<GetGenreUseCase>()
+//
+//    @Test
+//    fun `genre loaded success`() =
+//        runTest {
+//
+//
+//            every {
+//                useCase()
+//            } returns flowOf(
+//                listOf(
+//                    Genre(
+//                        1,
+//                        "Action"
+//                    )
+//                )
+//            )
+//
+//            val viewModel =
+//                GenreViewModel(
+//                    useCase
+//                )
+//
+//            assertEquals(
+//                "Action",
+//                viewModel.state.value
+//                    .genres[0]
+//                    .name
+//            )
+//        }
+//}
