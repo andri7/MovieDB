@@ -33,12 +33,9 @@ fun MovieScreen(
         )
     }
 
-
     val movies =
         viewModel.movies
             .collectAsLazyPagingItems()
-
-
 
     PagingStateHandler(
 
@@ -73,7 +70,6 @@ fun MovieScreen(
         }
 
     ){
-
 
         LazyColumn(
             modifier =
@@ -157,8 +153,6 @@ fun MovieScreen(
                     }
                 }
             }
-
-
 
             item {
 

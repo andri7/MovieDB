@@ -5,8 +5,6 @@ import com.atf.moviedb.data.remote.MovieApi
 import org.koin.dsl.module
 
 val networkModule = module {
-
     single { KtorClient.create() }
-
     single { MovieApi(get()) }
 }

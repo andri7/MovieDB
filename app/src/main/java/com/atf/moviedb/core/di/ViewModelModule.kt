@@ -8,8 +8,6 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { GenreViewModel(getGenreUseCase = get()) }
-
     viewModel { MovieViewModel(get()) }
-
     viewModel { DetailViewModel(get(), get(), get()) }
 }

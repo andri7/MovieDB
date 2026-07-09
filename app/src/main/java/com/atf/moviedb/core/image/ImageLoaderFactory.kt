@@ -7,10 +7,7 @@ import coil.memory.MemoryCache
 import java.io.File
 
 object ImageLoaderFactory {
-
-    fun create(
-        context: Context
-    ): ImageLoader {
+    fun create(context: Context): ImageLoader {
 
         return ImageLoader.Builder(context).memoryCache {
             MemoryCache.Builder(context)

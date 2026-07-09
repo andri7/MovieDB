@@ -16,9 +16,7 @@ object KtorClient {
 
     fun create(): HttpClient {
         return HttpClient(Android) {
-
             expectSuccess = true
-
             install(ContentNegotiation) {
                 json(
                     Json {
@@ -53,23 +51,17 @@ object KtorClient {
             }
 
             HttpResponseValidator {
-
                 handleResponseExceptionWithRequest { exception, _ ->
-
                     val clientException =
                         exception as? ClientRequestException
 
-                    when (
-                        clientException?.response?.status
-                    ) {
-
+                    when (clientException?.response?.status) {
                         HttpStatusCode.Unauthorized -> {
                             throw ApiException(
                                 message = "Unauthorized",
                                 code = 401
                             )
                         }
-
                         else -> throw exception
                     }
                 }

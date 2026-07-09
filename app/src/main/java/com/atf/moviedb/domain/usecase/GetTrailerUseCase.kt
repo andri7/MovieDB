@@ -5,10 +5,6 @@ import com.atf.moviedb.domain.repository.MovieRepository
 
 class GetTrailerUseCase(
     private val repository: MovieRepository
-){
-
-    suspend operator fun invoke(
-        movieId:Int
-    )= repository.getTrailer(movieId)
-
+) {
+    suspend operator fun invoke(movieId: Int) = repository.getTrailer(movieId)
 }

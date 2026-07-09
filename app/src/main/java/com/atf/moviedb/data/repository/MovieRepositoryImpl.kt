@@ -34,40 +34,40 @@ class MovieRepositoryImpl(
 ) : MovieRepository {
 
     override fun getGenres(): Flow<AppState<List<Genre>>> {
-       return offlineFirstResource(
-           query = {
-               genreDao.getGenres()
-                   .map { list ->
-                       list.map {
-                           it.toDomain()
-                       }
-                   }
-           },
+        return offlineFirstResource(
+            query = {
+                genreDao.getGenres()
+                    .map { list ->
+                        list.map {
+                            it.toDomain()
+                        }
+                    }
+            },
 
-           fetch = {
-               syncManager.sync {
-                   api.getGenres()
-               }
-           },
+            fetch = {
+                syncManager.sync {
+                    api.getGenres()
+                }
+            },
 
-           saveFetchResult = {
-               genreDao.insertGenres(
-                   it.genres.map { genre ->
-                       genre.toEntity()
-                   }
-               )
-           },
+            saveFetchResult = {
+                genreDao.insertGenres(
+                    it.genres.map { genre ->
+                        genre.toEntity()
+                    }
+                )
+            },
 
-           shouldFetch = {
-               it.isEmpty()
-           }
-       )
+            shouldFetch = {
+                it.isEmpty()
+            }
+        )
     }
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMovies(
-        genreId:Int
-    ):Flow<PagingData<Movie>> {
+        genreId: Int
+    ): Flow<PagingData<Movie>> {
 
         return Pager(
             config = PagingConfig(
@@ -88,7 +88,6 @@ class MovieRepositoryImpl(
             }
 
         ).flow.map { paging ->
-
             paging.map {
                 it.toDomain()
             }
@@ -121,7 +120,6 @@ class MovieRepositoryImpl(
                 )
             }
         ).flow.map { data ->
-
             data.map {
                 it.toDomain()
             }
@@ -158,7 +156,6 @@ class MovieRepositoryImpl(
                 }
 
                 reviewDao.insertReviews(reviews)
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }

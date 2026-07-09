@@ -9,15 +9,10 @@ import com.atf.moviedb.domain.model.Trailer
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-
     fun getGenres(): Flow<AppState<List<Genre>>>
-
-    fun getMovies(genreId:Int): Flow<PagingData<Movie>>
-
-    suspend fun getMovieDetail(movieId:Int): Movie
-
-    fun getReviews(movieId:Int): Flow<PagingData<Review>>
-
-    suspend fun getTrailer(movieId:Int): List<Trailer>
+    fun getMovies(genreId: Int): Flow<PagingData<Movie>>
+    suspend fun getMovieDetail(movieId: Int): Movie
+    fun getReviews(movieId: Int): Flow<PagingData<Review>>
+    suspend fun getTrailer(movieId: Int): List<Trailer>
 
 }

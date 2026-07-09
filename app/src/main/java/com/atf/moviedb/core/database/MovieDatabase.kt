@@ -22,12 +22,8 @@ import com.atf.moviedb.data.local.entity.CacheInfoEntity
     version = 2
 )
 abstract class MovieDatabase : RoomDatabase() {
-
     abstract fun movieDao(): MovieDao
-
     abstract fun genreDao(): GenreDao
-
     abstract fun reviewDao(): ReviewDao
-
     abstract fun cacheInfoDao(): CacheInfoDao
 }

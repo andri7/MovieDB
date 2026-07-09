@@ -2,12 +2,10 @@ package com.atf.moviedb.data.remote.dto
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class TrailerResponse(
-    val results:List<TrailerDto>
+    val results: List<TrailerDto>
 )
-
 
 @Serializable
 data class TrailerDto(
@@ -16,5 +14,4 @@ data class TrailerDto(
     val name: String,
     val site: String,
     val type: String
-
 )

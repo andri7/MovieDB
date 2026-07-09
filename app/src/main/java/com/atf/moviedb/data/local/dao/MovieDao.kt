@@ -6,25 +6,12 @@ import com.atf.moviedb.data.local.entity.MovieEntity
 
 @Dao
 interface MovieDao {
+    @Query("SELECT * FROM movies WHERE genreId=:genreId")
+    fun getMovies(genreId: Int): PagingSource<Int, MovieEntity>
 
-    @Query(
-        "SELECT * FROM movies WHERE genreId=:genreId"
-    )
-    fun getMovies(
-        genreId: Int
-    ): PagingSource<Int, MovieEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovies(movies: List<MovieEntity>)
 
-    @Insert(
-        onConflict = OnConflictStrategy.REPLACE
-    )
-    suspend fun insertMovies(
-        movies: List<MovieEntity>
-    )
-
-    @Query(
-        "DELETE FROM movies WHERE genreId=:genreId"
-    )
-    suspend fun clearMovies(
-        genreId: Int
-    )
+    @Query("DELETE FROM movies WHERE genreId=:genreId")
+    suspend fun clearMovies(genreId: Int)
 }

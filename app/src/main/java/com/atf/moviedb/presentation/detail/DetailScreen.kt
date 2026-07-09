@@ -33,7 +33,6 @@ import com.atf.moviedb.presentation.component.ErrorView
 import com.atf.moviedb.presentation.component.MovieImage
 import org.koin.compose.viewmodel.koinViewModel
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(

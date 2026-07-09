@@ -25,13 +25,10 @@ class MovieViewModel(
                 it != 0
             }
             .flatMapLatest { id ->
-
                 repository
                     .getMovies(id)
-
             }
             .cachedIn(viewModelScope)
-
 
     fun setGenre(id: Int){
         _genreId.value = id

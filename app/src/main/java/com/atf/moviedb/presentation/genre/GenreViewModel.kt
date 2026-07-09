@@ -19,14 +19,11 @@ class GenreViewModel(
             AppState.Idle
         )
 
-    val genres =
-        _genres.asStateFlow()
+    val genres = _genres.asStateFlow()
 
-    private val _event =
-        MutableSharedFlow<UiEvent>()
+    private val _event = MutableSharedFlow<UiEvent>()
 
-    val event =
-        _event.asSharedFlow()
+    val event = _event.asSharedFlow()
 
     init {
         loadGenres()
@@ -35,7 +32,6 @@ class GenreViewModel(
     fun loadGenres() {
 
         viewModelScope.launch {
-
             getGenreUseCase()
                 .collect { state ->
 

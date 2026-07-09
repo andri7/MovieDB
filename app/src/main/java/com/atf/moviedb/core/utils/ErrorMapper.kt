@@ -9,7 +9,6 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 
 object ErrorMapper {
-
     fun map(throwable: Throwable): AppError {
         return when (throwable) {
 

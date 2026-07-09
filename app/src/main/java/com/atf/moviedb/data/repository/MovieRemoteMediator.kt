@@ -47,7 +47,6 @@ class MovieRemoteMediator(
                 LoadType.REFRESH -> 1
 
                 LoadType.APPEND -> {
-
                     val itemCount =
                         state.pages.sumOf {
                             it.data.size
@@ -57,7 +56,6 @@ class MovieRemoteMediator(
                 }
 
                 LoadType.PREPEND -> {
-
                     return MediatorResult.Success(
                         endOfPaginationReached = true
                     )
@@ -72,38 +70,28 @@ class MovieRemoteMediator(
 
             val movies =
                 response.results.map {
-
                     it.toEntity(
                         genreId
                     )
                 }
 
             db.withTransaction {
-
                 if (loadType == LoadType.REFRESH) {
-
                     movieDao.clearMovies(genreId)
-
                 }
-
                 movieDao.insertMovies(
                     movies
                 )
-
                 cacheManager.update(
                     "MOVIE_$genreId"
                 )
             }
-
             MediatorResult.Success(
                 endOfPaginationReached =
                     response.results.isEmpty()
             )
-
         } catch (e: Exception) {
-
             MediatorResult.Error(e)
-
         }
     }
 }

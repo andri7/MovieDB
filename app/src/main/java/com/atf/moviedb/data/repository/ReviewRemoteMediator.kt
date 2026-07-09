@@ -22,8 +22,7 @@ class ReviewRemoteMediator(
     ): MediatorResult {
 
         return try {
-
-            page = when(loadType){
+            page = when (loadType) {
                 LoadType.REFRESH -> 1
                 LoadType.APPEND -> page + 1
                 LoadType.PREPEND ->
@@ -36,8 +35,7 @@ class ReviewRemoteMediator(
             )
 
             db.withTransaction {
-
-                if(loadType == LoadType.REFRESH){
+                if (loadType == LoadType.REFRESH) {
                     db.reviewDao()
                         .clearReviews(movieId)
                 }
@@ -53,9 +51,7 @@ class ReviewRemoteMediator(
             MediatorResult.Success(
                 response.results.isEmpty()
             )
-
-        } catch (e: Exception){
-
+        } catch (e: Exception) {
             MediatorResult.Error(e)
         }
     }

@@ -45,7 +45,6 @@ fun NavGraphApp(
                     ?.toInt()
                     ?: 0
 
-
             MovieScreen(
                 genreId = id,
                 modifier = modifier,
